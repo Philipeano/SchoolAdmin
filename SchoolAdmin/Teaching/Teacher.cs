@@ -1,13 +1,17 @@
-﻿using System;
+﻿using SchoolAdmin.Learning;
+using SchoolAdmin.LookUp;
+using System;
+using System.Collections.Generic;
+
 namespace SchoolAdmin.Teaching
 {
-    public class Teacher
+    public class Teacher : ITeacher
     {
 
         private readonly int _staffId;
         private readonly string _fullName;
-        private string _subject;
-        private string[] _learners;
+        private SchoolSubject _subject;
+        private List<ILearner> _learners;
 
 
         public Teacher(int staffId, string fullName)
@@ -29,7 +33,7 @@ namespace SchoolAdmin.Teaching
         }
 
 
-        public string Subject
+        public SchoolSubject Subject
         {
             // This get accessor uses the explicit syntax, rather than the short form
 
@@ -44,7 +48,7 @@ namespace SchoolAdmin.Teaching
         }
 
 
-        public string[] Learners
+        public List<ILearner> Learners
         {
             get
             {
@@ -56,10 +60,8 @@ namespace SchoolAdmin.Teaching
             }
         }
 
-
         public void Teach()
         {
-            // Additional instructions can go here
             Console.WriteLine("I am teaching a class now.");
         }
     }

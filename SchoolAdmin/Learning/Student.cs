@@ -1,11 +1,13 @@
-﻿using System;
+﻿using SchoolAdmin.LookUp;
+using System;
+
 namespace SchoolAdmin.Learning
 {
-    public class Student
+    public class Student : ILearner
     {
         private readonly int _regNumber;
         private readonly string _fullName;
-        private string _level;
+        private StudentLevel _level;
 
 
         public Student(int regNumber, string fullName)
@@ -27,14 +29,15 @@ namespace SchoolAdmin.Learning
         }
 
 
-        public string Level
+        public StudentLevel Level
         {
             get
             {
                 return _level;
             }
 
-            set {
+            set
+            {
                 _level = value;
             }
         }
@@ -42,7 +45,6 @@ namespace SchoolAdmin.Learning
 
         public void Learn()
         {
-            // Additional instructions can go here
             Console.WriteLine("I am learning something interesting now.");
         }
 
