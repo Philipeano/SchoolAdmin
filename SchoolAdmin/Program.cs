@@ -1,4 +1,5 @@
 ﻿using SchoolAdmin.Learning;
+using SchoolAdmin.Library;
 using SchoolAdmin.LookUp;
 using SchoolAdmin.Teaching;
 using System;
@@ -87,6 +88,15 @@ namespace SchoolAdmin
             {
                 Console.WriteLine($"Key is {kvp.Key} \t Value is {kvp.Value.Name}");
             }
+
+
+            // Class1 demo1 = new Class1();
+
+            Class2 demo2 = new Class2();
+            demo2.DemoString = "This is an example.";
+            demo2.DemoNumber = 5;
+
+           
         }
     }
 }
