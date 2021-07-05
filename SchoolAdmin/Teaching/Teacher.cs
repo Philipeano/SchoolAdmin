@@ -1,4 +1,5 @@
-﻿using SchoolAdmin.Learning;
+﻿using SchoolAdmin.Facilities;
+using SchoolAdmin.Learning;
 using SchoolAdmin.LookUp;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,11 @@ namespace SchoolAdmin.Teaching
             set {
                 _learners = value;
             }
+        }
+
+        public void ReceiveNewBookAlert(object source, BookEventArgs args)
+        {
+            Console.WriteLine($"Sending email to teacher: \nTitle: {args.Title}, \nAuthor: {args.Author}, \nTime Added: {args.TimeAdded}\n\n");
         }
 
         public void Teach()

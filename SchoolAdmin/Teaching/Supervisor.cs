@@ -1,4 +1,5 @@
-﻿using SchoolAdmin.Learning;
+﻿using SchoolAdmin.Facilities;
+using SchoolAdmin.Learning;
 using SchoolAdmin.LookUp;
 using System.Collections.Generic;
 
@@ -36,6 +37,11 @@ namespace SchoolAdmin.Teaching
         public void Supervise()
         {
 
+        }
+
+        public void ReceiveNewBookAlert(object source, BookEventArgs args)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
