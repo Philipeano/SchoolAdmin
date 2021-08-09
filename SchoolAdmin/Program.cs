@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using SchoolAdmin.MongoDbDemo;
 using MongoDB.Bson;
+using SchoolAdmin.AdoDotnetDemo;
+using SchoolAdmin.AdoDotnetDemo.DTO;
 
 namespace SchoolAdmin
 {
@@ -13,32 +15,48 @@ namespace SchoolAdmin
     {
         static void Main(string[] args)
         {
-            // Instantiate the MongoDbService class
-            MongoDbService dbService = new MongoDbService();
+            // Instantiate the SqlDataService class
+            SqlDataService sqlDbService = new SqlDataService();
 
-            // Define filter information
-            KeyValuePair<string, object> filterPair = new KeyValuePair<string, object>("subject", "Chemistry");
+            // Define and insert Teacher objects
+            TeacherDTO teacher1 = new TeacherDTO() { FirstName = "Adeleke", MiddleName = "", LastName = "Ayinde", Subject = "Physics" };
+            TeacherDTO teacher2 = new TeacherDTO() { FirstName = "Temi", MiddleName = "Temitope", LastName = "Tegbe", Subject = "Philosophy" };
+            sqlDbService.Insert("teachers", teacher1);
+            sqlDbService.Insert("teachers", teacher2);
 
-            // Define data for the update
-            KeyValuePair<string, object> newData = new KeyValuePair<string, object>("staff_id", 10003);
-
-            // Invoke the Update method to make the change 
-            dbService.Update("teachers", filterPair, "=", newData);
-
-            // Invoke the Delete method to make the change 
-            dbService.Delete("teachers", filterPair, "=");
-
-            // Query the database for all teachers
-            Console.WriteLine("The available teachers are: ");
-            var teachers = dbService.FetchAll("teachers");
-            foreach (var teacher in teachers)
-            {
-                Console.WriteLine(teacher);
-            }
+            // Define and insert Student objects
+            StudentDTO student1 = new StudentDTO() { FirstName = "Newman", MiddleName = "Philip", LastName = "Amadi", Level = "SSS 3" };
+            StudentDTO student2 = new StudentDTO() { FirstName = "Habeeb", MiddleName = "", LastName = "Olakitan", Level = "SeniorMan" };
+            sqlDbService.Insert("students", student1);
+            sqlDbService.Insert("students", student2);
 
 
 
 
+
+
+            //// Instantiate the MongoDbService class
+            //MongoDbService dbService = new MongoDbService();
+
+            //// Define filter information
+            //KeyValuePair<string, object> filterPair = new KeyValuePair<string, object>("subject", "Chemistry");
+
+            //// Define data for the update
+            //KeyValuePair<string, object> newData = new KeyValuePair<string, object>("staff_id", 10003);
+
+            //// Invoke the Update method to make the change 
+            //dbService.Update("teachers", filterPair, "=", newData);
+
+            //// Invoke the Delete method to make the change 
+            //dbService.Delete("teachers", filterPair, "=");
+
+            //// Query the database for all teachers
+            //Console.WriteLine("The available teachers are: ");
+            //var teachers = dbService.FetchAll("teachers");
+            //foreach (var teacher in teachers)
+            //{
+            //    Console.WriteLine(teacher);
+            //}
 
 
             //var filteredTeachers = dbService.FetchWithFilter("teachers", filterPair, ">");
