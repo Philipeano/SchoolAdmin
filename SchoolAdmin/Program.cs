@@ -16,50 +16,66 @@ namespace SchoolAdmin
             // Instantiate the MongoDbService class
             MongoDbService dbService = new MongoDbService();
 
+            // Define filter information
+            KeyValuePair<string, object> filterPair = new KeyValuePair<string, object>("subject", "Chemistry");
+
+            // Define data for the update
+            KeyValuePair<string, object> newData = new KeyValuePair<string, object>("staff_id", 10003);
+
+            // Invoke the Update method to make the change 
+            dbService.Update("teachers", filterPair, "=", newData);
+
+            // Invoke the Delete method to make the change 
+            dbService.Delete("teachers", filterPair, "=");
+
             // Query the database for all teachers
-            //Console.WriteLine("The available teachers are: ");
-            //var teachers = dbService.FetchAll("teachers");
-
-            var filterPair = new KeyValuePair<string, object>("staff_id", 10001);
-            var filteredTeachers = dbService.FetchWithFilter("teachers", filterPair, ">");
-
-            Console.WriteLine("The matching teachers for this query are: ");
-            foreach (var teacher in filteredTeachers)
+            Console.WriteLine("The available teachers are: ");
+            var teachers = dbService.FetchAll("teachers");
+            foreach (var teacher in teachers)
             {
                 Console.WriteLine(teacher);
             }
 
-            //foreach (var teacher in teachers)
+
+
+
+
+
+            //var filteredTeachers = dbService.FetchWithFilter("teachers", filterPair, ">");
+
+            //Console.WriteLine("The matching teachers for this query are: ");
+            //foreach (var teacher in filteredTeachers)
             //{
             //    Console.WriteLine(teacher);
             //}
 
-            //// Create Teacher documents and insert them in the collection
+
+
+            // Create Teacher documents and insert them in the collection
             //BsonDocument teacherDoc1 = new BsonDocument()
             //{
-            //    {"staff_id",10001 },
-            //    {"name", "Chief Adeleke Ayinde" },
+            //    {"staff_id",20001 },
+            //    {"name", "Madam Jane Okeke" },
             //    {"subject", "Mathematics" }
             //};
 
             //BsonDocument teacherDoc2 = new BsonDocument()
             //{
-            //    {"staff_id",10002 },
-            //    {"name", "High Chief Bayowa Odometa" },
-            //    {"subject", "Physics" }
+            //    {"staff_id",20002 },
+            //    {"name", "Odogwu Hope Ndudim" },
+            //    {"subject", "Commerce" }
             //};
 
             //BsonDocument teacherDoc3 = new BsonDocument()
             //{
-            //    {"staff_id",10002 },
-            //    {"name", "Ambassador Temi Tegbe" },
-            //    {"subject", "Philosophy" }
+            //    {"staff_id",20003 },
+            //    {"name", "Alhaja Fatimah Akanbi" },
+            //    {"subject", "Chemistry" }
             //};
 
             //dbService.Insert("teachers", teacherDoc1);
             //dbService.Insert("teachers", teacherDoc2);
             //dbService.Insert("teachers", teacherDoc3);
-
 
             //// Create Student documents and insert them in the collection
             //BsonDocument studentDoc1 = new BsonDocument()

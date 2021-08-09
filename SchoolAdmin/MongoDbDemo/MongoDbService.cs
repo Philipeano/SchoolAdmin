@@ -62,26 +62,7 @@ namespace SchoolAdmin.MongoDbDemo
         public List<BsonDocument> FetchWithFilter(string collectionName, KeyValuePair<string, object> filterPair, string comparer)
         {
             List<BsonDocument> result;
-            FilterDefinition<BsonDocument> filter;
-
-            switch (comparer)
-            {
-                case "<":
-                    filter = Builders<BsonDocument>.Filter.Lt(filterPair.Key, filterPair.Value);
-                    break;
-                case "<=":
-                    filter = Builders<BsonDocument>.Filter.Lte(filterPair.Key, filterPair.Value);
-                    break;
-                case ">":
-                    filter = Builders<BsonDocument>.Filter.Gt(filterPair.Key, filterPair.Value);
-                    break;
-                case ">=":
-                    filter = Builders<BsonDocument>.Filter.Gte(filterPair.Key, filterPair.Value);
-                    break;
-                default:
-                    filter = Builders<BsonDocument>.Filter.Eq(filterPair.Key, filterPair.Value);
-                    break;
-            }
+            FilterDefinition<BsonDocument> filter = GetFilter(filterPair, comparer);
 
             switch (collectionName)
             {
@@ -100,16 +81,67 @@ namespace SchoolAdmin.MongoDbDemo
         }
 
 
+        public void Update(string collectionName, KeyValuePair<string, object> filterPair, string comparer, KeyValuePair<string, object> newData)
+        {
+            FilterDefinition<BsonDocument> filter = GetFilter(filterPair, comparer);
+            UpdateDefinition<BsonDocument> update = Builders<BsonDocument>.Update.Set(newData.Key, newData.Value.ToString());
 
-        public void TestConnection() {
-
-            // Display a list of databases on this server
-            var dbList = mongo.ListDatabases().ToList();
-            Console.WriteLine("The list of databases on this server is: ");
-            foreach (var db in dbList)
+            switch (collectionName)
             {
-                Console.WriteLine(db);
+                case "teachers":
+                    teachersCollection.UpdateOne(filter, update);
+                    break;
+                case "students":
+                    studentsCollection.UpdateOne(filter, update);
+                    break;
+                default:
+                    Console.WriteLine("Invalid collection! Only 'teachers' and 'students' are allowed.");
+                    break;
             }
         }
+
+
+        public void Delete(string collectionName, KeyValuePair<string, object> filterPair, string comparer)
+        {
+            FilterDefinition<BsonDocument> filter = GetFilter(filterPair, comparer);
+
+            switch (collectionName)
+            {
+                case "teachers":
+                    teachersCollection.DeleteOne(filter);
+                    break;
+                case "students":
+                    studentsCollection.DeleteOne(filter);
+                    break;
+                default:
+                    Console.WriteLine("Invalid collection! Only 'teachers' and 'students' are allowed.");
+                    break;
+            }
+        }
+
+
+        private FilterDefinition<BsonDocument> GetFilter(KeyValuePair<string, object> filterPair, string comparer)
+        {
+            FilterDefinition<BsonDocument> filter;
+            switch (comparer)
+            {
+                case "<":
+                    filter = Builders<BsonDocument>.Filter.Lt(filterPair.Key, filterPair.Value);
+                    break;
+                case "<=":
+                    filter = Builders<BsonDocument>.Filter.Lte(filterPair.Key, filterPair.Value);
+                    break;
+                case ">":
+                    filter = Builders<BsonDocument>.Filter.Gt(filterPair.Key, filterPair.Value);
+                    break;
+                case ">=":
+                    filter = Builders<BsonDocument>.Filter.Gte(filterPair.Key, filterPair.Value);
+                    break;
+                default:
+                    filter = Builders<BsonDocument>.Filter.Eq(filterPair.Key, filterPair.Value);
+                    break;
+            }
+            return filter;
+        } 
     }
 }
